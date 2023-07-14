@@ -17,6 +17,17 @@ const style = {
 
 export default function MovieDetail({open, onClose, data}) {
   
+  if(!data){
+    data ={
+      title: "Loading...",
+      description: "Loading...",
+      age_rating: "Loading...",
+      poster_url: "http://www.pixelstalk.net/wp-content/uploads/2016/10/Blank-Wallpaper-HD.jpg",
+      release_date: new Date(),
+      movie_id: "0"
+    }
+  }
+
   let release_date = new Date(data.release_date)
 
   return (

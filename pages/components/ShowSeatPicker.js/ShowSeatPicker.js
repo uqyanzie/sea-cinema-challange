@@ -15,16 +15,6 @@ const style = {
 };
 
 export default function ShowSeatPicker({open, onClose, showData}) {
-    const seats = [];
-
-    for (let i = 1; i <= 64; i++) {
-        seats.push(   
-            <label style={{width:"40px"}}>
-                <Field value={values} type="checkbox" name="seatNums" style={{width:"20px"}}/>
-                {i}
-            </label>   
-        )
-    }
 
   return (
     <>
@@ -34,29 +24,8 @@ export default function ShowSeatPicker({open, onClose, showData}) {
       >
         <Box sx={style}>
             <Container maxWidth="md" sx={{padding:2, marginY:2, border: "solid 1px #000"}}>
-            <Formik
-                initialValues={{
-                    seatNums: [],
-                }}
-                onSubmit={async (values) => {
-                    await sleep(500);
-                    alert(JSON.stringify(values, null, 2));
-                }}
-            >
-           {    ({values}) => (
-                <Form>
-                <div id="checkbox-group">Checked</div>
-                        <div role="group">
-                            {seats}    
-                        </div>  
-                    
-                </Form>
-           ) 
-                
-            }
-            </Formik>
-            </Container>
             
+            </Container>
         </Box>
       </Modal>
     </>

@@ -8,12 +8,24 @@ import Typography from '@mui/material/Typography';
 import Link from 'next/link'
 
 export default function ImgMediaCard({ data, onShowDetail}) {
+
+  if(!data){
+    data ={
+      title: "Loading...",
+      description: "Loading...",
+      age_rating: "Loading...",
+      poster_url: "http://www.pixelstalk.net/wp-content/uploads/2016/10/Blank-Wallpaper-HD.jpg",
+      release_date: new Date(),
+      movie_id: "0"
+    }
+  }
+
   return (
     <Card sx={{ maxWidth: 250, maxHeight: 570, margin:"10px 0", paddingBottom:1}}>
       <CardMedia
         component="img"
         alt="green iguana"
-        image={data.poster_url || "./avatar.jpg"}
+        image={data.poster_url}
       />
       <CardContent sx={{textOverflow:"ellipsis", overflow:"hidden", padding:1.5}}>
         <Typography gutterBottom variant="h5" component="div" textOverflow="ellipsis" overflow="hidden" whiteSpace="nowrap">
