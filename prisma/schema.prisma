@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model Movie{
+  movie_id      Int       @id @default(autoincrement())
+  title         String    
+  description   String    @db.MediumText
+  release_date  DateTime
+  poster_url    String    @db.Text
+  age_rating    Int
+  shows         Show[]
+}
+
+model CinemaHall{
+  cinema_hall_id  Int     @id @default(autoincrement())
+  name            String
+  total_seats     Int
+  shows           Show[]
+  cinema_seats    CinemaSeat[]
+}
+
+model Show{
+  show_id         Int         @id @default(autoincrement())
+  date            DateTime
+  start_time      DateTime
+  end_time        DateTime
+  ticket_price    Int
+  movie           Movie       @relation(fields:[movie_id], references:[movie_id])
+  movie_id        Int 
+  cinema_hall     CinemaHall  @relation(fields:[cinema_hall_id], references:[cinema_hall_id])
+  cinema_hall_id  Int
+  books           Booking[]
+  show_seats      ShowSeat[]
+}
+
+model CinemaSeat{
+  cinema_seat_id  Int         @id @default(autoincrement())
+  seat_number     Int   
+  cinema_hall     CinemaHall  @relation(fields:[cinema_hall_id], references:[cinema_hall_id])
+  cinema_hall_id  Int
+  show_seats      ShowSeat[]
+}
+
+model Booking{
+  booking_id      Int         @id @default(autoincrement())
+  number_of_seats Int
+  timestamp       DateTime    @default(now())
+  show            Show        @relation(fields:[show_id], references:[show_id])
+  show_id         Int
+  show_seats      ShowSeat[]
+}
+
+model ShowSeat{
+  show_seat_id    Int         @id @default(autoincrement())
+  booked          Boolean     @default(false)
+  cinema_seat     CinemaSeat  @relation(fields:[cinema_seat_id], references:[cinema_seat_id])
+  cinema_seat_id  Int
+  show            Show        @relation(fields:[show_id], references:[show_id])
+  show_id         Int
+  booking         Booking?    @relation(fields:[booking_id], references:[booking_id])
+  booking_id      Int?
+}

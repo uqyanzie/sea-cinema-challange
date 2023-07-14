@@ -1,12 +1,11 @@
 import Head from 'next/head'
 import * as React from 'react'
-import { Inter } from 'next/font/google'
-import { Container, Grid, Typography} from "@mui/material"
+import { Grid } from "@mui/material"
 import axios from 'axios';
 
-import Layout from './components/Layout/Layout'
-import ImgMediaCard from './components/ImgMediaCard/ImgMediaCard'
-import MovieDetail from './components/MovieDetail/MovieDetail'
+import Layout from '@/pages/components/Layout/Layout'
+import ImgMediaCard from '@/pages/components/ImgMediaCard/ImgMediaCard'
+import MovieDetail from '@/pages/components/MovieDetail/MovieDetail'
 
 export default function Home() {
   const [movies, setMovies] = React.useState([])
@@ -16,7 +15,7 @@ export default function Home() {
   const baseURL = "http://localhost:3000/api/v1"
 
   const getMovies = async () => {
-    await axios.get(`${baseURL}/movies`)
+    axios.get(`${baseURL}/movies`)
     .then(function (response) {
       setMovies(response.data.data)
     })
@@ -51,7 +50,6 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-      
         <Grid container spacing={2} direction={{xs:"column", sm:"row"}} alignItems="center" justifyContent="center">
         {movies.map((key, value) => (
           <Grid key={key.movie_id} item xs={12} sm={6} md={4} lg={3} xl={3} justifyContent="center" alignItems="center" alignContent="center" display="flex">
@@ -67,7 +65,6 @@ export default function Home() {
           onClose={handleCloseMovieDetail}
           data={movieDetail}
         />
-      
     </main>
     </>
   )
